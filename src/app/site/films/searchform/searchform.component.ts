@@ -1,5 +1,7 @@
+import { SearchmovieService } from './../services/searchmovie.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormValidators } from '../form-validators';
 
 @Component({
   selector: 'app-searchform',
@@ -8,17 +10,37 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 })
 export class SearchformComponent implements OnInit {
   searchForm ! : FormGroup;
+  title ! : FormControl;
+  year ! : FormControl;
 
-  constructor(private fb:FormBuilder) { }
+  constructor(private fb:FormBuilder,
+    private searchMovie:SearchmovieService) { }
 
   ngOnInit() {
+    let titlePattern = '[a-z A-Z 0-9,\.]+';
+    let yearPattern ='[0-9]{4}';
+    this.title = this.fb.control(
+      '',[Validators.required,Validators.maxLength(30),Validators.pattern(titlePattern)]
+      );
+      this.year = this.fb.control(
+        '2018',[Validators.pattern(yearPattern),FormValidators.integerBetween(1900,2022)]
+        );
+
+
     this.searchForm = this.fb.group({
-      title:'',
-      year:2018
+      title:this.title,
+      year:this.year
     });
   }
   startSearch(){
-    console.log("recherche lancée");
+    let title = this.title.valid ? this.title.value:null;
+ let year = this.year.valid ? this.year.value : null;
+    let action= (data:Object) =>{
+      console.log(data);
+
+    }
+    if(title)
+ this.searchMovie.search(action,title,year);
 
   }
 
