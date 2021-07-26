@@ -1,5 +1,5 @@
 <div class="container">
-  <form class="form-inline well well-in">
+  <form (ngSubmit)="startSearch()" [formGroup]="searchForm" class="form-inline well well-in">
     <div class="form-group col-md-5">
       <label>Veuillez entrer un titre de film</label>
       <input type="text" class="form-control" placeholder="Titre du film">
