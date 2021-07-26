@@ -10,6 +10,7 @@ import { NavmenuComponent } from './navmenu/navmenu.component';
   ],
   imports: [
     CommonModule
-  ]
+  ],
+  exports : [NavmenuComponent]
 })
 export class SharedModule { }
