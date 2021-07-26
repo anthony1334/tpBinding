@@ -1,12 +1,11 @@
+import { SharedModule } from './site/shared/shared.module';
+import { ErrorsModule } from './site/errors/errors.module';
 import { HomeModule } from './site/home/home.module';
 import { FilmsModule } from './site/films/films.module';
 import { AboutModule } from './site/about/about.module';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
-
 import { BrowserModule } from '@angular/platform-browser';
-
-
 import { AppComponent } from './app.component';
 
 @NgModule({
@@ -18,7 +17,9 @@ import { AppComponent } from './app.component';
     AboutModule,
     FilmsModule,
     HomeModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ErrorsModule,
+    SharedModule
 
   ],
   providers: [],
