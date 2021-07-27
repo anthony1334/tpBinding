@@ -12,12 +12,15 @@ export class SearchformComponent implements OnInit {
   searchForm ! : FormGroup;
   title ! : FormControl;
   year ! : FormControl;
+  results : any;
+  errors ! : string;
+
 
   constructor(private fb:FormBuilder,
     private searchMovie:SearchmovieService) { }
 
   ngOnInit() {
-    let titlePattern = '[a-z A-Z 0-9,\.]+';
+    let titlePattern = '[ a-zA-Z0-9,\.]+';
     let yearPattern ='[0-9]{4}';
     this.title = this.fb.control(
       '',[Validators.required,Validators.maxLength(30),Validators.pattern(titlePattern)]
@@ -35,12 +38,24 @@ export class SearchformComponent implements OnInit {
   startSearch(){
     let title = this.title.valid ? this.title.value:null;
  let year = this.year.valid ? this.year.value : null;
-    let action= (data:Object) =>{
-      console.log(data);
+ let that = this;
+    let action= (data:any) =>{
+     if(data.Error) {
+       that.errors = data.Error;
+       that.results='';
+     }
+     else{
+      that.errors = '';
+      that.results= data;
+     }
 
     }
+    console.log(title);
+
     if(title)
  this.searchMovie.search(action,title,year);
+ else
+ this.errors='titre non obligatoire!'
 
   }
 
